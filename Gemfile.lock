@@ -1,0 +1,25 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    bip_mnemonic (0.0.2)
+    chunky_png (1.3.8)
+    ffi (1.9.18)
+    highline (1.7.8)
+    money-tree (0.9.0)
+      ffi
+    rqrcode (0.10.1)
+      chunky_png (~> 1.0)
+    shamir-secret-sharing (0.0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bip_mnemonic
+  highline
+  money-tree
+  rqrcode
+  shamir-secret-sharing
+
+BUNDLED WITH
+   1.14.6
