@@ -5,6 +5,7 @@ require 'rqrcode'
 require 'money-tree'
 require 'shamir-secret-sharing'
 require 'highline/import'
+require 'openssl'
 
 SALT="TylersSafeAndReproducibleWallets"
 
@@ -20,13 +21,7 @@ def get_password
 end
 
 def pw_entropy(pw, hashes: 100_000)
-  hash = pw + SALT
-
-  1.upto(hashes).each do
-    hash = Digest::SHA256.digest(hash)
-  end
-
-  Digest::SHA256.hexdigest(hash)
+  OpenSSL::PKCS5.pbkdf2_hmac(pw, SALT, hashes, 512, OpenSSL::Digest::SHA512.new)
 end
 
 def pw_to_mnemonic(pw)
@@ -64,7 +59,7 @@ def wallet_batch(size, seed: nil)
   timestamp = Time.now.to_s
 
   (0).upto(size-1).map do |ix|
-    node = master.node_for_path("m/44p/0p/#{ix}p")
+    node = master.node_for_path("m/44p/0p/#{ix}p/0/0")
     pub = node.to_address
     prv = node.private_key.to_wif
 
